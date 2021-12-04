@@ -9,6 +9,8 @@ server:
     multipart:
       maxFileSize: 10MB
       maxRequestSize: 100MB  
+    ssl:
+        
 spring:
   mvc:
     view:
@@ -19,7 +21,6 @@ spring:
     url: jdbc:postgresql://localhost:5432/
     username: postgres
     password: postgres
-
     
   jpa:
     database: POSTGRESQL

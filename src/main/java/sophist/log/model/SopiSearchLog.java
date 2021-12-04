@@ -1,4 +1,4 @@
-package sophist.common.model;
+package sophist.log.model;
 
 import java.io.Serializable;
 import java.sql.Timestamp;
@@ -14,28 +14,23 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-// IP 로그
+// 검색어 로그
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
 @Entity 
-public class SopiIpLog implements Serializable{
+public class SopiSearchLog implements Serializable {
 	
-	// IP 코드
+	// 검색어 코드
 	@Id 
-	private String ipCd;
-	
-	// IP 주소
-	@Column(nullable = false, length = 20) 
-	private String ipAddr;
+	private String searchCd;
 	
 	// 생성일자
 	@CreationTimestamp 
 	private Timestamp createDate;
-
-	// URL
+	
+	// 검색어
 	@Column(nullable = false, length = 100) 
-	private String Url;
-
+	private String searchText;
 }

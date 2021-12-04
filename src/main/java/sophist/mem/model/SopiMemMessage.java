@@ -1,4 +1,4 @@
-package sophist.mem.repository;
+package sophist.mem.model;
 
 import java.io.Serializable;
 import java.sql.Timestamp;
@@ -6,23 +6,29 @@ import java.sql.Timestamp;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 
-import org.hibernate.annotations.CreationTimestamp;
-
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-// 사용자 통계
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
 @Entity 
-public class SopiMemStatistics implements Serializable{
+public class SopiMemMessage implements Serializable{
 	
-	// 통계코드
+	// 메시지 코드
 	@Id 
-	private String statisticsCd;
+	private String messageCd;
+	
+	// 아이디
+	private String memId;
+	
+	// 메시지 내용
+	private String messageContents;
+	
+	// 메시지 상태
+	private String messageState;
 
 }

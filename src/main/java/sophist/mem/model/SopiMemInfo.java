@@ -1,4 +1,4 @@
-package sophist.mem.repository;
+package sophist.mem.model;
 
 import java.io.Serializable;
 import java.sql.Timestamp;
