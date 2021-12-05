@@ -27,7 +27,7 @@ public class SopiSearchLog implements Serializable {
 	private String searchCd;
 	
 	// 생성일자
-	@CreationTimestamp 
+	@CreationTimestamp
 	private Timestamp createDate;
 	
 	// 검색어

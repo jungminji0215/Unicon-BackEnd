@@ -30,5 +30,17 @@ public class LogInfoServiceImpl implements LogInfoService {
 		return searchLogInfoRepository.findAll(pageable);
 	}
 
+	@Override
+	public void insertSearchLog(SopiSearchLog sopiSearchLog) throws Throwable {
+		 searchLogInfoRepository.save(sopiSearchLog);
+	}
+
+	@Override
+	public SopiSearchLog selectSearchLogDetail(String searchCd) throws Throwable {
+		return searchLogInfoRepository.findById(searchCd).orElseThrow(()->{
+			return new IllegalArgumentException("ip 상세보기 실패 : 아이피를 찾을 수 없습니다.");
+		});
+	}
+
 	
 }

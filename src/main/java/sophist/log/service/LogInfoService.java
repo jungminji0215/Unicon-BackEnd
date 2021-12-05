@@ -11,4 +11,9 @@ public interface LogInfoService {
 	public Page<SopiIpLog> selectIpLogList(Pageable pageable) throws Throwable;
 	
 	public Page<SopiSearchLog> selectSearchLogList(Pageable pageable) throws Throwable;
+	
+	public void insertSearchLog(SopiSearchLog sopiSearchLog) throws Throwable;
+	
+	public SopiSearchLog selectSearchLogDetail(String searchCd) throws Throwable;
+	
 }
