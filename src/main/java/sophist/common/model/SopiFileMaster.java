@@ -1,17 +1,23 @@
 package sophist.common.model;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
+import javax.persistence.Table;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import sophist.group.model.SopiGroupMaster;
+import sophist.mem.model.SopiMemInfo;
 
 // 파일 마스터
 @Data
@@ -19,15 +25,27 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @Builder
 @Entity 
-public class SopiFileMaster implements Serializable{
+@Table(name="sopi_file_master")
+public class SopiFileMaster implements Serializable  {
 	
 	// 파일코드
 	@Id 
+	@Column(name="file_cd")
 	private String fileCd;
 	
+	@OneToMany(mappedBy = "sopiFileMaster")
+	private List<SopiFileDetail> fileDetailList = new ArrayList<SopiFileDetail>();
+	
+	@OneToOne
+	@JoinColumn(name="file_cd")
+	private SopiMemInfo sopiMemInfo;
+	
+	@OneToOne
+	@JoinColumn(name="file_cd")
+	private SopiGroupMaster sopiGroupMaster;
+	
 	// 모듈코드
-//	@ManyToOne
-//	@JoinColumn(name="module_cd")
+	/*
 	private SopiCodeMaster sopiCodeMaster;
-
+	*/
 }

@@ -5,9 +5,14 @@ import java.sql.Timestamp;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.MapsId;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
+import javax.persistence.Table;
 
 import org.hibernate.annotations.CreationTimestamp;
 
@@ -22,15 +27,16 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @Builder
 @Entity 
-public class SopiFileDetail implements Serializable{
+@Table(name="sopi_file_detail")
+public class SopiFileDetail {
 	
 	// 파일 상세 코드
 	@Id 
 	private String fileDetailCd;
 	
 	// 파일 코드
-	@OneToOne
-	@JoinColumn(name="file_cd")
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name="file_cd",insertable = false,updatable = false)
 	private SopiFileMaster sopiFileMaster;
 	
 	// 파일 경로
@@ -55,4 +61,7 @@ public class SopiFileDetail implements Serializable{
 	// 수정일자
 	@CreationTimestamp 
 	private Timestamp updateDate;
+	
+	@Column(name="file_cd")
+	private String fileCd;
 }
