@@ -5,11 +5,18 @@ import java.io.Serializable;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
+import javax.persistence.Table;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import sophist.common.model.SopiCodeMaster;
+import sophist.common.model.SopiFileMaster;
 
 // 모임 마스터
 @Data
@@ -17,6 +24,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @Builder
 @Entity 
+@Table(name="sopi_group_master")
 public class SopiGroupMaster implements Serializable{
 	
 	// 모임 코드
@@ -35,5 +43,13 @@ public class SopiGroupMaster implements Serializable{
 	// 모임 설명 
 	@Column(nullable = false, length = 300)
 	private String groupDesc;
-
+	
+	@OneToOne
+	@JoinColumn(name="file_cd",insertable = false,updatable = false)
+	private SopiFileMaster sopiFileMaster;
+	
+	@Column(name="file_cd")
+	private String fileCd;
+	
 }
+
