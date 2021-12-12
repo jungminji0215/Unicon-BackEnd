@@ -4,7 +4,10 @@ import java.io.Serializable;
 import java.sql.Timestamp;
 
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -30,5 +33,9 @@ public class SopiMemMessage implements Serializable{
 	
 	// 메시지 상태
 	private String messageState;
+	
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name="mem_id")
+	private SopiMemMessage sopiMemMessage;
 
 }

@@ -9,7 +9,10 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 
 import org.hibernate.annotations.CreationTimestamp;
 
@@ -17,6 +20,8 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import sophist.common.model.SopiFileMaster;
+import sophist.group.model.SopiGroupMemMapping;
 
 @Data
 @NoArgsConstructor
@@ -65,5 +70,16 @@ public class SopiMemInfo implements Serializable {
 	@Column(nullable = false, length = 20) 
 	private String snsConfirm;
 	
-
+	@Column(name="file_cd")
+	private String fileCd;
+	
+	@OneToOne()
+	@JoinColumn(name="file_cd",insertable = false,updatable = false)
+	private SopiFileMaster sopiFileMaster;
+	
+	@OneToMany(mappedBy = "sopiMemMessage")
+	private SopiMemMessage sopiMemMessage;
+	
+	@OneToMany(mappedBy = "sopiGroupMemMapping")
+	private SopiGroupMemMapping sopiGroupMemMapping;
 }

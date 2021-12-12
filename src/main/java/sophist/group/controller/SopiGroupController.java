@@ -21,6 +21,6 @@ public class SopiGroupController {
 	
 	@GetMapping(value="/sophist/groupList")
 	public List<SopiGroupMaster> selectGroupList(Pageable pageable) throws Throwable{
-		return groupInfoService.findAllWithFileUsingJoin();
+		return groupInfoService.findAllWithFileUsingJoin(pageable);
 	}
 }

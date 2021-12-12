@@ -11,6 +11,6 @@ import sophist.group.model.SopiGroupMaster;
 
 public interface GroupInfoService {
 
-	public List<SopiGroupMaster> findAllWithFileUsingJoin();
+	public List<SopiGroupMaster> findAllWithFileUsingJoin(Pageable pageable);
 	
 }
