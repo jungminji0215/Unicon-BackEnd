@@ -2,11 +2,12 @@ package sophist.common.model;
 
 import java.io.Serializable;
 import java.sql.Timestamp;
+import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
-
+import javax.persistence.OneToMany;
 
 import org.hibernate.annotations.CreationTimestamp;
 
@@ -14,6 +15,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import sophist.mem.model.SopiMemMessage;
 
 // 코드 마스터
 @Data
@@ -57,6 +59,9 @@ public class SopiCodeMaster implements Serializable {
 	// 수정자
 	@Column(nullable = false, length = 30) 
 	private String updateUser;
+	
+	@OneToMany(mappedBy = "sopiCodeMaster")
+	private List<SopiCodeMaster> sopiCodeMaster;
 	
 
 }

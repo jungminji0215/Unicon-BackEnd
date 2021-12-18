@@ -31,7 +31,7 @@ public class SopiCategory implements Serializable{
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name="mapping_cd")
 	private SopiGroupMemMapping sopiGroupMemMapping;
-	
+
 	// 카테고리 이름
 	@Column(nullable = false, length = 20)
 	private String categoryName;

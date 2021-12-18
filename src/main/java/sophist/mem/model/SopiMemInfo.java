@@ -78,8 +78,8 @@ public class SopiMemInfo implements Serializable {
 	private SopiFileMaster sopiFileMaster;
 	
 	@OneToMany(mappedBy = "sopiMemMessage")
-	private SopiMemMessage sopiMemMessage;
+	private List<SopiMemMessage> sopiMemMessage;
 	
-	@OneToMany(mappedBy = "sopiGroupMemMapping")
-	private SopiGroupMemMapping sopiGroupMemMapping;
+	@OneToMany(mappedBy = "sopiMemInfo")
+	private List<SopiGroupMemMapping> sopiGroupMemMapping;
 }

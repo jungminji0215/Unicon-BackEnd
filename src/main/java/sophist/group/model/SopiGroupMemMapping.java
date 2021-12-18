@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.Id;
@@ -24,36 +25,35 @@ import sophist.mem.model.SopiMemInfo;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-@Entity 
-public class SopiGroupMemMapping implements Serializable{
-	
+@Entity
+public class SopiGroupMemMapping implements Serializable {
+
 	// 맵핑 코드
-	@Id 
+	@Id
 	private String mappingCd;
-	
+
 	// 사용자 아이디
+	@Column(name="mem_id")
 	private String memId;
-	
+
 	// 모임 코드
+	@Column(name="group_cd")
 	private String groupCd;
-	
+
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumns({
-		@JoinColumn(name="mem_id"),
-		@JoinColumn(name="group_cd")
-	})
+	@JoinColumn(name = "mem_id",insertable = false,updatable = false)
 	private SopiMemInfo sopiMemInfo;
-	
-	@OneToMany(mappedBy="sopiCategory")
+
+	@OneToMany(mappedBy = "sopiGroupMemMapping")
 	private List<SopiCategory> sopiCategoryList = new ArrayList<SopiCategory>();
-	
-	@OneToMany(mappedBy="sopiGroupReview")
+
+	@OneToMany(mappedBy = "sopiGroupMemMapping")
 	private List<SopiGroupReview> sopiGroupReviewList = new ArrayList<SopiGroupReview>();
-	
-	@OneToMany(mappedBy="sopiGroupPermission")
+
+	@OneToMany(mappedBy = "sopiGroupMemMapping")
 	private List<SopiGroupPermission> sopiGroupPermission = new ArrayList<SopiGroupPermission>();
-	
-	@OneToMany(mappedBy="sopiGroupDetail")
+
+	@OneToMany(mappedBy = "sopiGroupMemMapping")
 	private List<SopiGroupDetail> sopiGroupDetailList = new ArrayList<SopiGroupDetail>();
 
 }

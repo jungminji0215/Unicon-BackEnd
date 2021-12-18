@@ -32,7 +32,7 @@ public class SopiGroupReview implements Serializable {
 	@ManyToOne 
 	@JoinColumn(name="mapping_cd")
 	private SopiGroupMemMapping sopiGroupMemMapping;
-	
+
 	// 내용
 	@Column(nullable = false, length = 5000)
 	private String contents;
