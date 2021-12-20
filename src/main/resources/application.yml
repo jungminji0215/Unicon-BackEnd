@@ -18,9 +18,9 @@ spring:
       suffix: .jsp
   datasource:
     driver-class-name: org.postgresql.Driver
-    url: jdbc:postgresql://localhost:5432/
-    username: postgres
-    password: postgres
+    url: jdbc:postgresql://ec2-3-210-29-54.compute-1.amazonaws.com:5432/dago7l0bh15m9h
+    username: mzisdquvibcqwi
+    password: f863dc0af417316ca505786bdb97e8d0c5b2aa822a05ee3ccd9a59f6a8d18d0c
     
   jpa:
     database: POSTGRESQL
