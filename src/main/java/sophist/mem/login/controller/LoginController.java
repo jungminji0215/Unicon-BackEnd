@@ -191,7 +191,7 @@ public class LoginController {
 				.memId(memId) // 이메일
 				.memNickname(memNickname) // 임시 닉네임 
 //				.memPw(memPw)
-				.memPw("1234")
+				.memPw("13954a298aa3509ed88938884ee7f74227fc23069cfe692b8e20df54b8a7ebe2")
 				.snsConfirm("Kakao")
 				.build();
 				

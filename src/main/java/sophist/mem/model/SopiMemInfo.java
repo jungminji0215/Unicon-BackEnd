@@ -58,12 +58,12 @@ public class SopiMemInfo implements Serializable {
 	@Column(nullable = false, length = 1)
 	private String memGender;
 	
-	// 사용자 상태
+	// 사용자 상태 Y - 활동회원, N - 탈퇴회원
 	@Column(nullable = false, length = 1)
 	private String memState;
 	
-	// 사용자 내용 // 사용자 내용이 뭔가용?
-	@Column(nullable = false, length = 5000)
+	// 사용자 내용
+	@Column(length = 5000)
 	private String memContents;
 	
 	// 사용자 SNS 확인
