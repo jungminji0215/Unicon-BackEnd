@@ -32,7 +32,7 @@ public class SopiMemInfo implements Serializable {
 	
 	// 사용자 아이디
 	@Id // Primary Key
-	@Column(nullable = false, length = 20, unique = true)  
+	@Column(nullable = false, length = 100, unique = true)  
 	private String memId;
 	// nullable = false ->  null이 될수 없다
 	// length = 20 -> 길이
