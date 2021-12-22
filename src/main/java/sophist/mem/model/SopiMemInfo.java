@@ -32,7 +32,7 @@ public class SopiMemInfo implements Serializable {
 	
 	// 사용자 아이디
 	@Id // Primary Key
-	@Column(nullable = false, length = 20, unique = true)  
+	@Column(nullable = false, length = 100, unique = true)  
 	private String memId;
 	// nullable = false ->  null이 될수 없다
 	// length = 20 -> 길이
@@ -58,12 +58,12 @@ public class SopiMemInfo implements Serializable {
 	@Column(nullable = false, length = 1)
 	private String memGender;
 	
-	// 사용자 상태
+	// 사용자 상태 Y - 활동회원, N - 탈퇴회원
 	@Column(nullable = false, length = 1)
 	private String memState;
 	
-	// 사용자 내용 // 사용자 내용이 뭔가용?
-	@Column(nullable = false, length = 5000)
+	// 사용자 내용
+	@Column(length = 5000)
 	private String memContents;
 	
 	// 사용자 SNS 확인
