@@ -31,7 +31,7 @@ public class SopiMemStatistics implements Serializable {
 	private String moduleName;
 	
 	// 세부 모듈
-	@Column(name = "module_desc")
+	@Column(name = "module_detail_name")
 	private String moduleDetailName;
 
 	// 모듈 설명
