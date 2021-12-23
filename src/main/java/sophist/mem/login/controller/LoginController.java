@@ -193,6 +193,8 @@ public class LoginController {
 //				.memPw(memPw)
 				.memPw("13954a298aa3509ed88938884ee7f74227fc23069cfe692b8e20df54b8a7ebe2")
 				.snsConfirm("Kakao")
+				.memGender("E")
+				.memState("Y") // Y : 횔동회원, N : 탈퇴
 				.build();
 				
 		//  가입자 비가입자 체크해서 처리 originUser : 기존 가입자
@@ -303,6 +305,8 @@ public class LoginController {
 				.memPw("1234")
 				.snsConfirm("Naver")
 				.memGender(memGender)
+				.memGender("N")
+				.memState("Y") // Y : 횔동회원, N : 탈퇴
 				.build();
 				
 		//  가입자 비가입자 체크해서 처리 originUser : 기존 가입자

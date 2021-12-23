@@ -27,6 +27,10 @@ public class LoginService {
 		// 암호화 된 비번 넣기
 		sopiMemInfo.setMemPw(encPassword);	
 		
+		// 필수 값 넣기
+		sopiMemInfo.setMemState("Y");	
+		sopiMemInfo.setSnsConfirm("Normal");	
+		
 		// 이미 존재하는 아이디면 -2 리턴
 		if(SearchMem(sopiMemInfo.getMemId()) != null) {
 			return -2;

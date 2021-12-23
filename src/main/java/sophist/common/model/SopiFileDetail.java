@@ -52,7 +52,7 @@ public class SopiFileDetail {
 	private String sysFileName;
 	
 	// 파일크기
-	private int fileSize;
+	private long fileSize;
 	
 	// 생성일자
 	@CreationTimestamp 
