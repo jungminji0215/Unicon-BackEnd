@@ -22,13 +22,13 @@ public class CommonController {
 	
 	// 파일 업로드
 	@PostMapping("/sophist/file/upload")
-	public  ResponseDto<Integer> fileUpload(@RequestParam("file") MultipartFile file) throws Throwable{ 
+	public  ResponseDto<String> fileUpload(@RequestParam("file") MultipartFile file) throws Throwable{ 
 		log.info("원 파일명={}", file.getOriginalFilename()); // 원파일명 확인해보기
 		log.info("사이즈={}", file.getSize());
 		log.info("타입={}", file.getContentType());
 		
-		int result = fileDetailService.fileUpload(file);
-		return new ResponseDto<Integer>(HttpStatus.OK.value(), result) ;
+		String result = fileDetailService.fileUpload(file);
+		return new ResponseDto<String>(HttpStatus.OK.value(), result) ;
 	}
 
 }

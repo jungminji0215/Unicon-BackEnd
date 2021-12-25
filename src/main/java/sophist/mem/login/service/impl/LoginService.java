@@ -19,7 +19,7 @@ public class LoginService {
     
 	// 회원 가입
 	@Transactional // 회원가입 전체 서비스가 하나의 트랜잭션으로 묶임, 전체가 성공이 돼야 commit
-	public int Join(SopiMemInfo sopiMemInfo) {
+	public String Join(SopiMemInfo sopiMemInfo) {
 		// 암호화 되지 않은 비번 
 		String rawPassword = sopiMemInfo.getMemPw(); 
 		// 암호화
@@ -31,35 +31,31 @@ public class LoginService {
 		sopiMemInfo.setMemState("Y");	
 		sopiMemInfo.setSnsConfirm("Normal");	
 		
-		// 이미 존재하는 아이디면 -2 리턴
+		// 이미 존재하는 아이디면 already_exists 리턴
 		if(SearchMem(sopiMemInfo.getMemId()) != null) {
-			return -2;
+			return "already_exists";
 		}
 		
 		try {
-			// 회원 가입 성공 : 1 리턴
+			// 회원 가입 성공 : success 리턴
 			loginRepository.save(sopiMemInfo);
-			return 1;
+			return "success";
 		}catch(Exception e) {
 			e.printStackTrace();
 		}
-		// 회원 가입 실패 : -1 리턴
-		return -1;
+		// 회원 가입 실패 : fail 리턴
+		return "fail";
 	}
-	
-	
 	
     // 일반 로드인
 	@Transactional(readOnly = true) // select 할 때 트랜젝션 시작하고 서비스 종료시에 트랜잭션 종료하는데까지 정합성 유지할 수 있음
-	public int login(SopiMemInfo sopiMemInfo) {
+	public String login(SopiMemInfo sopiMemInfo) {
 			
 		SopiMemInfo user = loginRepository.findByMemId(sopiMemInfo.getMemId());
 		
 		System.out.println(passwordEncoder.matches(sopiMemInfo.getMemPw(), user.getMemPw()));
-		
-
-		
-		// 비번 틀리거나 아이디가 존재하지 않으면 -1 리턴
+			
+		// 비번 틀리거나 아이디가 존재하지 않으면 fail 리턴
 		 if(!passwordEncoder.matches(sopiMemInfo.getMemPw(), user.getMemPw())) {
 				System.out.println("입력한것");
 				System.out.println(sopiMemInfo.getMemId());
@@ -67,16 +63,11 @@ public class LoginService {
 				System.out.println("가져온 카카오회원 정보");
 				System.out.println(user.getMemId());
 				System.out.println(user.getMemPw());
-			 return -1;
+			 return "fail";
 		 }
 		 
-		 return 1;
+		 return "success";
 }
-	
-	
-	
-
-	
 	
 	// 중복 회원 가입 방지를 위한 회원 찾기
 	@Transactional(readOnly = true)

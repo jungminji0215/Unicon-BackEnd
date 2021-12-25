@@ -26,7 +26,7 @@ public class FileDetailImpl implements FileDetailService{
 	private String fileDir = "C:\\sopi_uploaded_files\\";
 	
 	@Override
-	public int fileUpload(MultipartFile file) throws Throwable {
+	public String fileUpload(MultipartFile file) throws Throwable {
 		
 		
 		if(!file.isEmpty()) {
@@ -49,12 +49,12 @@ public class FileDetailImpl implements FileDetailService{
 			
 			file.transferTo(new File(filePath)); //파일을 이 경로에다가 저장을 해줌
 			
-			return 1;
+			return "success";
 		
 	    }
 
 		
-		return 1;
+		return "aa";
 	}
 
 }

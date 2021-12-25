@@ -5,6 +5,6 @@ import org.springframework.web.multipart.MultipartFile;
 
 public interface FileDetailService {
 	
-	public int fileUpload(MultipartFile file) throws Throwable;
+	public String fileUpload(MultipartFile file) throws Throwable;
 
 }

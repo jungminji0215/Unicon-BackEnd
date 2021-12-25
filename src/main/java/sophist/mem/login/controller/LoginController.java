@@ -42,53 +42,33 @@ public class LoginController {
 	
 	// 회원가입 
 	@PostMapping("/join")
-	public  ResponseDto<Integer> Join(@RequestBody SopiMemInfo sopiMemInfo) { 
-		int result = loginService.Join(sopiMemInfo);
-		return new ResponseDto<Integer>(HttpStatus.OK.value(), result) ;
+	public  ResponseDto<String> Join(@RequestBody SopiMemInfo sopiMemInfo) { 
+		String result = loginService.Join(sopiMemInfo);
+		return new ResponseDto<String>(HttpStatus.OK.value(), result) ;
 	}
-	
-	
-//	// 로그인 
-//    @PostMapping("/login")
-//	public SopiMemInfo login(@RequestBody SopiMemInfo sopiMemInfo, HttpSession session) {
-//		SopiMemInfo user = loginService.login(sopiMemInfo);
-//		
-//		// 세션이 만들어짐
-//		if(user != null ) {
-//			session.setAttribute("user", user); 
-//		} 
-//		return user;	
-//	}
 	
 	// 로그인 
     @PostMapping("/login")
-	public ResponseDto<Integer> login(@RequestBody SopiMemInfo sopiMemInfo, HttpSession session) {
+	public ResponseDto<String> login(@RequestBody SopiMemInfo sopiMemInfo, HttpSession session) {
     	
-    	// 아이디 없으면 -1 리턴..
 		if(loginService.SearchMem(sopiMemInfo.getMemId()) == null) {
-			return new ResponseDto<Integer>(HttpStatus.OK.value(), -1) ;
+			return new ResponseDto<String>(HttpStatus.OK.value(), "fail") ;
 		}
 		
-		int result = loginService.login(sopiMemInfo);
+		String result = loginService.login(sopiMemInfo);
 		
 		
 		
 		// 유저 잘 불러왔으면 세션이 만들어짐
-		if(result != -1 ) {
+		if(result != "fail" ) {
 			session.setAttribute("user", sopiMemInfo.getMemId()); 
 		} 
-		return new ResponseDto<Integer>(HttpStatus.OK.value(), result) ;
+		return new ResponseDto<String>(HttpStatus.OK.value(), result) ;
 	}
-
-    
-    
-
-
-	
 	
 	// 카카오 로그인
 	@GetMapping("/social/login/kakao")
-	public ResponseDto<Integer> kakaoCallback(@RequestParam("code") String code) { 
+	public ResponseDto<String> kakaoCallback(@RequestParam("code") String code) { 
 		
 		// POST 방식으로 key=value 데이터를 요청(카카오쪽으로)
 		RestTemplate rt = new RestTemplate(); // http 요청 굉장히 편하게 할 수 있는 라이브러리
@@ -203,21 +183,21 @@ public class LoginController {
 		// 비가입자면 회원가입하고 로그인 처리
 		if(originUser == null) {
 			System.out.println("----------비가입자----------");
-			int result = loginService.Join(kakaoUser);
-			return new ResponseDto<Integer>(HttpStatus.OK.value(), result) ;
+			String result = loginService.Join(kakaoUser);
+			return new ResponseDto<String>(HttpStatus.OK.value(), result) ;
 		}
 			
 		// 가입자면 바로 로그인 처리
-		int result = loginService.login(kakaoUser);
+		String result = loginService.login(kakaoUser);
 			
-		return new ResponseDto<Integer>(HttpStatus.OK.value(), result) ;
+		return new ResponseDto<String>(HttpStatus.OK.value(), result) ;
 	}
 	
 	
 	
 	// 네이버
 	@GetMapping("/social/login/naver")
-	public ResponseDto<Integer> naverCallback(@RequestParam("code") String code)  { 
+	public ResponseDto<String> naverCallback(@RequestParam("code") String code)  { 
 		
 		
 		HttpHeaders headers = new HttpHeaders(); 
@@ -315,13 +295,13 @@ public class LoginController {
 		// 비가입자면 회원가입하고 로그인 처리
 		if(originUser == null) {
 			System.out.println("----------비가입자----------");
-			int result = loginService.Join(NaverUser);
-			return new ResponseDto<Integer>(HttpStatus.OK.value(), result) ;
+			String result = loginService.Join(NaverUser);
+			return new ResponseDto<String>(HttpStatus.OK.value(), result) ;
 		}
 			
 		// 가입자면 바로 로그인 처리
-		int result = loginService.login(NaverUser);
+		String result = loginService.login(NaverUser);
 			
-		return new ResponseDto<Integer>(HttpStatus.OK.value(), result) ;
+		return new ResponseDto<String>(HttpStatus.OK.value(), result) ;
 	}
 }
