@@ -13,7 +13,7 @@ import sophist.common.service.FileDetailService;
 import sophist.mem.login.ResponseDto;
 
 @Slf4j
-@CrossOrigin (origins ="http://localhost:3001")
+@CrossOrigin (origins ="http://localhost:3000")
 @RestController
 public class CommonController {
 	
