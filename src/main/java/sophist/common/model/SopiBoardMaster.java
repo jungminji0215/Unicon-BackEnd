@@ -32,7 +32,7 @@ public class SopiBoardMaster implements Serializable{
 	// 모듈 코드 
 	@ManyToOne
 	@JoinColumns({
-		@JoinColumn(name="board_cd",insertable = false,updatable = false),
+		@JoinColumn(name="master_cd",insertable = false,updatable = false),
 		@JoinColumn(name="module_cd",insertable = false,updatable = false)
 	})
 	private SopiCodeMaster sopiCodeMaster;

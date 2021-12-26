@@ -27,21 +27,23 @@ public class SopiCodeMaster implements Serializable {
 	
 	// 모듈코드
 	@Id 
+	@Column(name="module_cd")
 	private String moduleCd;
 	
 	// 마스터 코드
 	@Id
+	@Column(name="master_cd")
 	private String masterCd;
 	
 	// 모듈이름
 	private String moduleName;
 	
 	// 모듈설명  
-	@Column(nullable = false, length = 100) 
+	@Column( length = 100) 
 	private String messageContents;
 
 	// 사용여부 
-	@Column(nullable = false, length = 1) 
+	@Column(length = 1) 
 	private String messageState;
 	
 	// 생성일자
