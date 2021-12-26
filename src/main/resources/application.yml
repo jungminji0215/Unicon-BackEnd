@@ -8,8 +8,10 @@ server:
       force: true
     multipart:
       maxFileSize: 10MB
-      maxRequestSize: 100MB  
-    ssl:
+      maxRequestSize: 100MB
+      # 파일 저장 경로  
+      #location: D:\upload
+    #ssl:
         
 spring:
   mvc:
@@ -41,5 +43,8 @@ spring:
       
   logging: 
     config: classpath:log4j2-spring.xml
+  external:
+    file:
+      ext:jpg|png|hwp
  
       

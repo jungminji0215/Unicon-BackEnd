@@ -1,7 +1,6 @@
 package sophist.group.service.impl;
 
 
-import java.util.List;
 
 import javax.annotation.Resource;
 
@@ -21,7 +20,7 @@ public class GroupInfoServiceImpl implements GroupInfoService{
 	private GroupRepository groupRepository;
 
 	@Override
-	public List<SopiGroupMaster> findAllWithFileUsingJoin(Pageable pageable) {
-		return groupRepository.findAllWithFileUsingJoin(pageable);
+	public Page<SopiGroupMaster> findAllWithFileUsingJoin(String fileCd,Pageable pageable) {
+		return groupRepository.findAllWithFileUsingJoin(fileCd, pageable);
 	}
 }
