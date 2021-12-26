@@ -15,6 +15,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import sophist.chat.model.SopiChatRoomMappingModel;
 import sophist.common.model.SopiCodeMaster;
 import sophist.common.model.SopiFileMaster;
 
@@ -50,6 +51,10 @@ public class SopiGroupMaster implements Serializable{
 	
 	@Column(name="file_cd")
 	private String fileCd;
+	
+	@OneToOne
+	@JoinColumn(name="group_cd",insertable = false,updatable = false)
+	private SopiChatRoomMappingModel SopiChatRoomMappingModel;
 	
 }
 
