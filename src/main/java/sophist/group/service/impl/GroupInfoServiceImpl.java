@@ -1,11 +1,9 @@
 package sophist.group.service.impl;
 
 
-import java.util.List;
 
 import javax.annotation.Resource;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -21,7 +19,7 @@ public class GroupInfoServiceImpl implements GroupInfoService{
 	private GroupRepository groupRepository;
 
 	@Override
-	public List<SopiGroupMaster> findAllWithFileUsingJoin(Pageable pageable) {
-		return groupRepository.findAllWithFileUsingJoin(pageable);
+	public Page<SopiGroupMaster> findAllWithFileUsingJoin(String fileCd,Pageable pageable) {
+		return groupRepository.findAllWithFileUsingJoin(fileCd, pageable);
 	}
 }

@@ -1,7 +1,5 @@
 package sophist.group.controller;
 
-import java.util.List;
-
 import javax.annotation.Resource;
 
 import org.springframework.data.domain.Page;
@@ -20,7 +18,7 @@ public class SopiGroupController {
 	private GroupInfoService groupInfoService;
 	
 	@GetMapping(value="/sophist/groupList")
-	public List<SopiGroupMaster> selectGroupList(Pageable pageable) throws Throwable{
-		return groupInfoService.findAllWithFileUsingJoin(pageable);
+	public Page<SopiGroupMaster> selectGroupList(String fileCd,Pageable pageable) throws Throwable{
+		return groupInfoService.findAllWithFileUsingJoin(fileCd, pageable);
 	}
 }
