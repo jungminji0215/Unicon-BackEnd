@@ -9,7 +9,9 @@ import org.springframework.web.multipart.MultipartFile;
 
 import lombok.extern.slf4j.Slf4j;
 import sophist.common.model.SopiFileDetail;
+import sophist.common.model.SopiFileMaster;
 import sophist.common.repository.FileDetailRepository;
+import sophist.common.repository.FileMasterRepository;
 import sophist.common.service.FileDetailService;
 
 @Slf4j
@@ -23,12 +25,19 @@ public class FileDetailImpl implements FileDetailService{
 	@Autowired
 	private FileDetailRepository fileDetailRepository;
 	
+	@Autowired
+	private FileMasterRepository fileMasterRepository;
+	
 	private String fileDir = "C:\\sopi_uploaded_files\\";
 	
 	@Override
 	public String fileUpload(MultipartFile file) throws Throwable {
 		
 		
+		SopiFileMaster sopiFileMaster = new SopiFileMaster();
+		fileMasterRepository.save(sopiFileMaster);
+		
+				
 		if(!file.isEmpty()) {
 			
 			String originFileName = file.getOriginalFilename();

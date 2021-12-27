@@ -21,12 +21,20 @@ public class FileIdGenerator implements IdentifierGenerator  {
 	    try {
 	        Statement statement=connection.createStatement();
 
-	        ResultSet rs=statement.executeQuery("select max(file_cd) as Id from sopi_file_master");
-
+	        ResultSet rs=statement.executeQuery("select case when char_length(cast(file_cd as varchar)) =1 then '00000000' || cast(file_cd)"
+	        		+ " when char_length(cast(file_cd as varchar)) =2 then '0000000' || cast(file_cd)"
+	        		+ " when char_length(cast(file_cd as varchar)) =3 then '000000' || cast(file_cd)"
+	        		+ " when char_length(cast(file_cd as varchar)) =4 then '00000' || cast(file_cd)"
+	        		+ " when char_length(cast(file_cd as varchar)) =5 then '0000' || cast(file_cd)"
+	        		+ " when char_length(cast(file_cd as varchar)) =6 then '000' || cast(file_cd)"
+	        		+ " when char_length(cast(file_cd as varchar)) =7 then '00' || cast(file_cd)"
+	        		+ " when char_length(cast(file_cd as varchar)) =8 then '0' || cast(file_cd)"
+	        		+ " end "
+	        		+ " from (select cast(substring(max(file_cd),10) as INTEGER)+1 as file_cd from sopi_file_master) sfm;"
+	        		+ "");
 	        if(rs.next())
 	        {
-	            int id=rs.getInt(1)+101;
-	            String generatedId = prefix + new Integer(id).toString();
+	            String generatedId = prefix + rs.getInt(1);
 	            return generatedId;
 	        }
 	    } catch (SQLException e) {

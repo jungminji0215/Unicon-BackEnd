@@ -14,6 +14,8 @@ import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
+import org.hibernate.annotations.GenericGenerator;
+
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -33,9 +35,10 @@ public class SopiFileMaster implements Serializable  {
 	// 파일코드
 	@Id 
 	@Column(name="file_cd")
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@GeneratedValue(generator = "file_id")
+	@GenericGenerator(name="file_id",strategy = "sophist.common.channel.FileIdGenerator")
 	private String fileCd;
-	
+
 	@OneToMany(mappedBy = "sopiFileMaster")
 	private List<SopiFileDetail> fileDetailList = new ArrayList<SopiFileDetail>();
 	

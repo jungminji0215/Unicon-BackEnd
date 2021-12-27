@@ -6,6 +6,7 @@ import java.sql.Timestamp;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -15,6 +16,7 @@ import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.GenericGenerator;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -32,6 +34,9 @@ public class SopiFileDetail {
 	
 	// 파일 상세 코드
 	@Id 
+	@GeneratedValue(generator = "file_detail_id")
+	@GenericGenerator(name="file_detail_id",strategy = "sophist.common.channel.FileDetailIdGenerator")
+	// strategy 전략패턴?
 	private String fileDetailCd;
 	
 	// 파일 코드
