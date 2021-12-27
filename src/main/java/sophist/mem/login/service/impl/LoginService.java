@@ -9,70 +9,60 @@ import sophist.mem.login.repository.LoginRepository;
 import sophist.mem.model.SopiMemInfo;
 
 @Service
-public class LoginService { 
-	@Autowired 
+public class LoginService {
+	@Autowired
 	private LoginRepository loginRepository;
-	
+
 	// sha-256 암호화
-    @Autowired
-    private PasswordEncoder passwordEncoder;
-    
+	@Autowired
+	private PasswordEncoder passwordEncoder;
+
 	// 회원 가입
 	@Transactional // 회원가입 전체 서비스가 하나의 트랜잭션으로 묶임, 전체가 성공이 돼야 commit
-	public String Join(SopiMemInfo sopiMemInfo) {
-		// 암호화 되지 않은 비번 
-		String rawPassword = sopiMemInfo.getMemPw(); 
-		// 암호화
-		String encPassword = passwordEncoder.encode(rawPassword);
-		// 암호화 된 비번 넣기
-		sopiMemInfo.setMemPw(encPassword);	
-		
-		// 필수 값 넣기
-		sopiMemInfo.setMemState("Y");	
-		sopiMemInfo.setSnsConfirm("Normal");	
-		
-		// 이미 존재하는 아이디면 already_exists 리턴
-		if(SearchMem(sopiMemInfo.getMemId()) != null) {
-			return "already_exists";
-		}
-		
+	public String join(SopiMemInfo sopiMemInfo) {
+
 		try {
-			// 회원 가입 성공 : success 리턴
-			loginRepository.save(sopiMemInfo);
-			return "success";
-		}catch(Exception e) {
+			String rawPassword = sopiMemInfo.getMemPw(); // 암호화 되지 않은 비번
+			String encPassword = passwordEncoder.encode(rawPassword); // 암호화
+
+			sopiMemInfo.setMemPw(encPassword);
+			sopiMemInfo.setMemState("Y");
+			sopiMemInfo.setSnsConfirm("Normal");
+			loginRepository.save(sopiMemInfo); // 회원 가입
+
+		} catch (Exception e) {
 			e.printStackTrace();
+			e.getMessage();
 		}
-		// 회원 가입 실패 : fail 리턴
-		return "fail";
+		return "success"; // 회원 가입
 	}
-	
-    // 일반 로드인
+
+	// 일반 로드인
 	@Transactional(readOnly = true) // select 할 때 트랜젝션 시작하고 서비스 종료시에 트랜잭션 종료하는데까지 정합성 유지할 수 있음
-	public String login(SopiMemInfo sopiMemInfo) {
-			
-		SopiMemInfo user = loginRepository.findByMemId(sopiMemInfo.getMemId());
-		
-		System.out.println(passwordEncoder.matches(sopiMemInfo.getMemPw(), user.getMemPw()));
-			
-		// 비번 틀리거나 아이디가 존재하지 않으면 fail 리턴
-		 if(!passwordEncoder.matches(sopiMemInfo.getMemPw(), user.getMemPw())) {
-				System.out.println("입력한것");
-				System.out.println(sopiMemInfo.getMemId());
-				System.out.println(sopiMemInfo.getMemPw());
-				System.out.println("가져온 카카오회원 정보");
-				System.out.println(user.getMemId());
-				System.out.println(user.getMemPw());
-			 return "fail";
-		 }
-		 
-		 return "success";
-}
-	
-	// 중복 회원 가입 방지를 위한 회원 찾기
-	@Transactional(readOnly = true)
-	public SopiMemInfo SearchMem(String memId) {
+	public SopiMemInfo login(SopiMemInfo sopiMemInfo) {
+
+		try {
+			if (searchMem(sopiMemInfo.getMemId()) == null) {
+				return null;
+			}
+
+			SopiMemInfo user = loginRepository.findByMemId(sopiMemInfo.getMemId());
+			// 비번 틀리면 fail
+			if (!passwordEncoder.matches(sopiMemInfo.getMemPw(), user.getMemPw())) {
+				return null;
+			}
+
+		} catch (Exception e) {
+			e.printStackTrace();
+			e.getMessage();
+		}
+
+		return sopiMemInfo;
+	}
+
+	// 중복 회원 가입 방지를 위한 회원 조회
+	public SopiMemInfo searchMem(String memId) {
 		return loginRepository.findByMemId(memId);
 	}
-	
+
 }
