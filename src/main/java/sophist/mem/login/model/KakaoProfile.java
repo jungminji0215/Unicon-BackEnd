@@ -2,6 +2,7 @@ package sophist.mem.login.model;
 
 import lombok.Data;
 
+// 카카오
 @Data
 public class KakaoProfile {
 	public Integer id;

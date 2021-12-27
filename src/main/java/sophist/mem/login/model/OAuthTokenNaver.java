@@ -8,5 +8,4 @@ public class OAuthTokenNaver {
 	private String token_type;
 	private String refresh_token;
 	private int expires_in;
-
 }

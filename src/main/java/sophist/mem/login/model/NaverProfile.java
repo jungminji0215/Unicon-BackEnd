@@ -2,6 +2,7 @@ package sophist.mem.login.model;
 
 import lombok.Data;
 
+// 네이버
 @Data
 public class NaverProfile {
 

@@ -13,7 +13,7 @@ public class LoginService {
 	@Autowired 
 	private LoginRepository loginRepository;
 	
-	// sha-256 암호화 사용
+	// sha-256 암호화
     @Autowired
     private PasswordEncoder passwordEncoder;
     

@@ -31,6 +31,7 @@ import sophist.mem.login.model.OAuthTokenNaver;
 import sophist.mem.login.service.impl.LoginService;
 import sophist.mem.model.SopiMemInfo;
 
+
 // 프론트엔드 , 백엔드 서버가 분리 되어있기 때문에 CORS 문제가 발생 
 // 정상으로 통신하기 위해서 @CrossOrigin 어노테이션을 통해 해당 도메인에서 접근을 허용해주어야 한다.
 @CrossOrigin (origins ="http://localhost:3000")
