@@ -22,16 +22,20 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import lombok.extern.slf4j.Slf4j;
 import sophist.common.ResponseDto;
-import sophist.mem.login.model.KakaoProfile;
 import sophist.mem.login.model.NaverProfile;
-import sophist.mem.login.model.OAuthTokenKakao;
 import sophist.mem.login.model.OAuthTokenNaver;
+import sophist.mem.login.model.kakao.KakaoProfile;
+import sophist.mem.login.model.kakao.OAuthTokenKakao;
 import sophist.mem.login.service.impl.LoginService;
 import sophist.mem.model.SopiMemInfo;
 
+import javax.validation.Valid;
+
 // 프론트엔드 , 백엔드 서버가 분리 되어있기 때문에 CORS 문제가 발생 
 // 정상으로 통신하기 위해서 @CrossOrigin 어노테이션을 통해 해당 도메인에서 접근을 허용해주어야 한다.
+@Slf4j
 @CrossOrigin(origins = "http://localhost:3000")
 @RestController
 public class LoginController {
@@ -47,109 +51,48 @@ public class LoginController {
 
 	// 로그인
 	@PostMapping("/login")
-	public ResponseDto<String> login(@RequestBody SopiMemInfo sopiMemInfo, HttpSession session) {
+	public ResponseDto<SopiMemInfo> login(@RequestBody SopiMemInfo sopiMemInfo, HttpSession session) {
+		SopiMemInfo user = loginService.login(sopiMemInfo);
 
-		SopiMemInfo data = loginService.login(sopiMemInfo);
-
-		// 유저 잘 불러왔으면 세션이 만들어짐
-		if (data != null) {
+		// 세션이 만들어짐
+		if (user != null) {
 			session.setAttribute("user", sopiMemInfo.getMemId());
 		}
 
-		return new ResponseDto<String>(HttpStatus.OK.value(), sopiMemInfo.getMemId());
+		return new ResponseDto<SopiMemInfo>(HttpStatus.OK.value(), user);
 	}
 
 	// 카카오 로그인
-	@GetMapping("/social/login/kakao")
-	public ResponseDto<String> kakaoCallback(@RequestParam("code") String code) {
+	@PostMapping("/social/login/kakao")
+	public ResponseDto<SopiMemInfo> kakaoCallback(@RequestBody OAuthTokenKakao oAuthTokenKakao) {
 
-		// 1. 사용자가 카카오로부터 인증 받았구나라고 알 수 있는 code가 넘어옴
+		// 프론터에서 넘어 온 토큰 정보로 카카오 서버에 요청 할 차례
+		RestTemplate rt = new RestTemplate();
+		HttpHeaders headers = new HttpHeaders();
 
-		// POST 방식으로 key=value 데이터를 요청(카카오쪽으로)
-		RestTemplate rt = new RestTemplate(); // http 요청 굉장히 편하게 할 수 있는 라이브러리
-		HttpHeaders headers = new HttpHeaders(); // HttpHeader 객체 생성
-		headers.add("Content-type", "application/x-www-form-urlencoded;charset=utf-8"); // 내가 전송한 http body 데이터가
-																						// key=value 형태라고 알려주는 것
+		headers.add("Authorization", "Bearer " + oAuthTokenKakao.getAccess_token());
+		headers.add("Content-type", "application/x-www-form-urlencoded;charset=utf-8");
 
-		// body 데이터 담을 객체 (HttpBody 객체 생성)
-		MultiValueMap<String, String> params = new LinkedMultiValueMap<>();
-		params.add("grant_type", "authorization_code");
-		params.add("client_id", "13413852fa4149e062c0e50ba100b290");
-		params.add("redirect_uri", "http://localhost:8000/social/login/kakao");
-		params.add("code", code);
+		HttpEntity<MultiValueMap<String, String>> kakaoProfileRequest = new HttpEntity<>(headers);
 
-		// 바디와 헤더값을 갖는 엔티티가 된다.
-		// HttpHeader와 HttpBody를 하나의 오브젝트에 담기
-		HttpEntity<MultiValueMap<String, String>> kakaoTokenRequest = new HttpEntity<>(params, headers);
+		ResponseEntity<String> response = rt.exchange("https://kapi.kakao.com/v2/user/me", HttpMethod.POST,
+				kakaoProfileRequest, String.class);
 
-		// 2. 카카오 에게 사용자의 code와 함께 소피스트 어플리케이션 정보들 같이 보내서 해당 사용자의 정보를 소피스트가 접근할 수 있도록 하는
-		// 키(토큰) 요청
-		// 실제 Http 요청해보기 - Post 방식으로 - 그리고 response 변수의 응답 받음
-		ResponseEntity<String> response = rt.exchange( // exchange함수는 httpentity 객체 넣게 되어있다.
-				"https://kauth.kakao.com/oauth/token", HttpMethod.POST, // 요청 메서드가 무엇인지 -POST
-				kakaoTokenRequest, // 바디, 헤더값 한번에 넣기
-				String.class // 응답은 스트링으로 받겠다.
-		);
-
-		// response에 카카오에서 보낸 토큰 정보가 들어있음. 이제 그 토큰정보를 가지고 카카오에 사용자의 정보를 요청할 수 있음
-
-		// request.getBody() 정보를 객체에 담기?
-		// Gson, Json Simple, ObjectMapper
 		ObjectMapper objectMapper = new ObjectMapper();
-
-		OAuthTokenKakao oauthToken = null;
-
-		try {
-			oauthToken = objectMapper.readValue(response.getBody(), OAuthTokenKakao.class);
-		} catch (JsonMappingException e) {
-			e.printStackTrace();
-		} catch (JsonProcessingException e) {
-			e.printStackTrace();
-		}
-
-		// 3. 토큰 정보를 가지고 필요한 사용자 정보 요청 할 차례
-		RestTemplate rt2 = new RestTemplate();
-		HttpHeaders headers2 = new HttpHeaders();
-
-		headers2.add("Authorization", "Bearer " + oauthToken.getAccess_token());
-		headers2.add("Content-type", "application/x-www-form-urlencoded;charset=utf-8");
-
-		HttpEntity<MultiValueMap<String, String>> kakaoProfileRequest2 = new HttpEntity<>(headers2);
-
-		ResponseEntity<String> response2 = rt2.exchange("https://kapi.kakao.com/v2/user/me", HttpMethod.POST,
-				kakaoProfileRequest2, String.class);
-
-		ObjectMapper objectMapper2 = new ObjectMapper();
 		KakaoProfile kakaoProfile = null;
 
 		try {
-			kakaoProfile = objectMapper2.readValue(response2.getBody(), KakaoProfile.class);
+			kakaoProfile = objectMapper.readValue(response.getBody(), KakaoProfile.class);
 		} catch (JsonMappingException e) {
 			e.printStackTrace();
 		} catch (JsonProcessingException e) {
 			e.printStackTrace();
 		}
 
-//		// 인증된 코드값을 통해서 엑세스 토큰을 발급
-//		System.out.println(response.getBody());
-//		
-//		// 코드받고 엑세스토큰 요청받고, 엑세스토큰으로 회원정보 조회한 것을 출력
-//		System.out.println(response2.getBody());
-//		
-//		// 사용자 정보 확인
-//		System.out.println(kakaoProfile.getId());
-//		System.out.println( kakaoProfile.getKakao_account().getEmail());
-
-		// memId
-		System.out.println("이메일 " + kakaoProfile.getKakao_account().getEmail());
 		String memId = kakaoProfile.getKakao_account().getEmail();
-		// memNickname
-		System.out.println("닉네임: " + kakaoProfile.getProperties().getNickname());
 		String memNickname = kakaoProfile.getProperties().getNickname();
 
-		SopiMemInfo kakaoUser = SopiMemInfo.builder().memId(memId) // 이메일
-				.memNickname(memNickname) // 임시 닉네임
-//				.memPw(memPw)
+		SopiMemInfo kakaoUser = SopiMemInfo.builder().memId(memId).memNickname(memNickname)
 				.memPw("13954a298aa3509ed88938884ee7f74227fc23069cfe692b8e20df54b8a7ebe2").snsConfirm("Kakao")
 				.memGender("E").memState("Y") // Y : 횔동회원, N : 탈퇴
 				.build();
@@ -159,15 +102,13 @@ public class LoginController {
 
 		// 비가입자면 회원가입하고 로그인 처리
 		if (originUser == null) {
-			System.out.println("----------비가입자----------");
-			String data = loginService.join(kakaoUser);
-			return new ResponseDto<String>(HttpStatus.OK.value(), data);
+			loginService.join(kakaoUser);
 		}
 
 		// 가입자면 바로 로그인 처리
-		SopiMemInfo data = loginService.login(kakaoUser);
+		loginService.login(kakaoUser);
 
-		return new ResponseDto<String>(HttpStatus.OK.value(), data.getMemId());
+		return new ResponseDto<SopiMemInfo>(HttpStatus.OK.value(), kakaoUser);
 	}
 
 	// 네이버
