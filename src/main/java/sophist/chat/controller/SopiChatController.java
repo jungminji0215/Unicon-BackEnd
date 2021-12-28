@@ -3,6 +3,7 @@ package sophist.chat.controller;
 import java.util.List;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -18,7 +19,9 @@ public class SopiChatController {
 	private SopiChatService sopiChatService;
 	
 	@GetMapping(value = "/sophist/chatRoomList")
-	public List<SopiChatRoomModel> findAllWithChatRoomByMemId(String memId)  throws Throwable{
+	public List<SopiChatRoomModel> findAllWithChatRoomByMemId(String memId,HttpSession session)  throws Throwable{
+		memId = (String) session.getAttribute("user");
+		System.out.println(memId);
 		return sopiChatService.findAllWithChatRoomByMemId(memId);
 		
 	}

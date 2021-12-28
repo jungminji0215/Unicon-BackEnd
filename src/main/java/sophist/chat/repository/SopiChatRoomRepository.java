@@ -12,7 +12,8 @@ import sophist.chat.model.SopiChatRoomModel;
 @EnableJpaRepositories
 public interface SopiChatRoomRepository extends JpaRepository<SopiChatRoomModel,String>{
 	
-	@Query("SELECT scrm.roomName,sgm.groupName FROM SopiChatRoomModel scrm "
+	@Query("SELECT scrm.roomName,sgm.groupName,sgm.roomCd,scrmm.memId,scrmm.memNickname"
+			+ " FROM SopiChatRoomModel scrm "
 			+ " inner join SopiChatRoomMappingModel scrmm ON scrm.roomMappingCd=scrmm.roomMappingCd"
 			+ " inner join SopiGroupMaster sgm on sgm.groupCd=scrmm.groupCd"
 			+ " inner join SopiMemInfo smi on smi.memId=scrmm.memId"
