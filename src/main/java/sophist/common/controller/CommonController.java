@@ -9,8 +9,8 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 import lombok.extern.slf4j.Slf4j;
+import sophist.common.ResponseDto;
 import sophist.common.service.FileDetailService;
-import sophist.mem.login.ResponseDto;
 
 @Slf4j
 @CrossOrigin (origins ="http://localhost:3000")
