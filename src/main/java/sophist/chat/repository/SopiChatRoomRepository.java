@@ -16,11 +16,12 @@ public interface SopiChatRoomRepository extends JpaRepository<SopiChatRoomModel,
 			+ " FROM SopiGroupMaster sgm "
 			+ " inner join SopiFileMaster sfm on sgm.fileCd=sfm.fileCd"
 			+ " inner join SopiFileDetail sfd on sfm.fileCd=sfd.fileCd"
-			+ " inner join SopiChatRoomMapping scrm on sgm.groupCd=scrm.groupCd"
-			+ " inner join SopiChatRoom scr on scrm.roomMappingCd=scr.roomMappingCd"
+		
 			+ " inner join SopiGroupMemMapping sgmm on sgm.groupCd = sgmm.groupCd"
 			+ " inner join SopiCategory sctg on sgmm.mappingCd =sctg.mappingCd"
 			+ " inner join SopiGroupDetail sgd on sgmm.mappingCd = sgd.mappingCd"
+			+ " inner join SopiChatRoomMappingModel scrm on sgm.groupCd=scrm.groupCd"
+			+ " inner join SopiChatRoomModel scr on scrm.roomMappingCd=scr.roomMappingCd"
 			+ " where sctg.categoryState ='Y'"
 			+ " and sgm.groupState='Y' "
 			)
