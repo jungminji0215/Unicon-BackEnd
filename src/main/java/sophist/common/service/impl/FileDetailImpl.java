@@ -36,6 +36,7 @@ public class FileDetailImpl implements FileDetailService {
 		log.info("원 파일명={}", file.getOriginalFilename());
 		log.info("사이즈={}", file.getSize());
 		log.info("타입={}", file.getContentType());
+		log.info("파일={}", file.getName());
 
 		try {
 			System.out.println("----------------------------------");
@@ -55,11 +56,15 @@ public class FileDetailImpl implements FileDetailService {
 
 			SopiFileDetail sopiFileDetail = SopiFileDetail.builder().filePath(filePath).originFileName(originFileName)
 					.sysFileName(sysFileName).fileSize(fileSize).fileCd(maxFileCd).build();
+			
+			log.info("파일디테일={}", sopiFileDetail);
 
 			fileDetailRepository.save(sopiFileDetail);
 
 			// 파일을 이 경로에다가 저장
 			file.transferTo(new File(filePath));
+			
+			// sopi_mem_info 업데이트
 			
 
 		} catch (Exception e) {

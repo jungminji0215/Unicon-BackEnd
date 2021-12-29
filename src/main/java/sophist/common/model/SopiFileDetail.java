@@ -35,8 +35,7 @@ public class SopiFileDetail {
 	// 파일 상세 코드
 	@Id 
 	@GeneratedValue(generator = "file_detail_id")
-	@GenericGenerator(name="file_detail_id",strategy = "sophist.common.channel.FileDetailIdGenerator")
-	// strategy 전략패턴?
+	@GenericGenerator(name="file_detail_id", strategy = "sophist.common.channel.FileDetailIdGenerator")
 	private String fileDetailCd;
 	
 	// 파일 코드
