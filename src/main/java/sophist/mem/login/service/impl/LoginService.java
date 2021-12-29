@@ -60,6 +60,9 @@ public class LoginService {
 	public SopiMemInfo searchMem(String memId) {
 		return loginRepository.findByMemId(memId);
 	}
-
-	// 회원
+	
+	// 회원 업데이트
+	public SopiMemInfo updateMem(SopiMemInfo sopiMemInfo) {
+		return loginRepository.save(sopiMemInfo);
+	}
 }

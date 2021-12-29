@@ -25,15 +25,15 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import sophist.common.ResponseDto;
 import sophist.mem.login.model.NaverProfile;
 import sophist.mem.login.model.OAuthTokenNaver;
+import sophist.mem.login.model.ResponseLogin;
 import sophist.mem.login.model.kakao.KakaoProfile;
 import sophist.mem.login.model.kakao.OAuthTokenKakao;
 import sophist.mem.login.service.impl.LoginService;
 import sophist.mem.model.SopiMemInfo;
 
-
 // 프론트엔드 , 백엔드 서버가 분리 되어있기 때문에 CORS 문제가 발생 
 // 정상으로 통신하기 위해서 @CrossOrigin 어노테이션을 통해 해당 도메인에서 접근을 허용해주어야 한다.
-@CrossOrigin (origins ="http://localhost:3000",allowCredentials = "true")
+@CrossOrigin(origins = "http://localhost:3000 ", allowCredentials = "true") 
 @RestController
 public class LoginController {
 	@Autowired
@@ -48,15 +48,18 @@ public class LoginController {
 
 	// 로그인
 	@PostMapping("/login")
-	public ResponseDto<SopiMemInfo> login(@RequestBody SopiMemInfo sopiMemInfo, HttpSession session) {
-		SopiMemInfo user = loginService.login(sopiMemInfo);
+	public ResponseDto<ResponseLogin> login(@RequestBody SopiMemInfo sopiMemInfo, HttpSession session) {
+		SopiMemInfo result = loginService.login(sopiMemInfo);
 
 		// 세션이 만들어짐
-		if (user != null) {
+		if (result != null) {
 			session.setAttribute("user", sopiMemInfo.getMemId());
 		}
 
-		return new ResponseDto<SopiMemInfo>(HttpStatus.OK.value(), user);
+		ResponseLogin user = ResponseLogin.builder().memId(result.getMemId()).memNickname(result.getMemNickname())
+				.memContents(result.getMemContents()).memGender(result.getMemGender()).build();
+
+		return new ResponseDto<ResponseLogin>(HttpStatus.OK.value(), user);
 	}
 
 	// 카카오 로그인

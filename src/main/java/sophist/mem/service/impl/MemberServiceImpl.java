@@ -1,5 +1,10 @@
 package sophist.mem.service.impl;
 
-public class MemberServiceImpl {
+import org.springframework.stereotype.Service;
+
+import sophist.mem.service.MemberService;
+
+@Service
+public class MemberServiceImpl implements MemberService{
 
 }
