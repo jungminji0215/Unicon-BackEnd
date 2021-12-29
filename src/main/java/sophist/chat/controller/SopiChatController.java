@@ -22,7 +22,7 @@ public class SopiChatController {
 	public List<SopiChatRoomModel> findAllWithChatRoomByMemId(String memId,HttpSession session)  throws Throwable{
 		memId = (String) session.getAttribute("user");
 		System.out.println(memId);
-		return sopiChatService.findAllWithChatRoomByMemId(memId);
+		return sopiChatService.findAllWithChatRoomByMemId();
 		
 	}
 }

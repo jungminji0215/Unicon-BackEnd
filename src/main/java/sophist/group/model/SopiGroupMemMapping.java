@@ -57,6 +57,8 @@ public class SopiGroupMemMapping implements Serializable {
 	@OneToMany(mappedBy = "sopiGroupMemMapping")
 	private List<SopiGroupDetail> sopiGroupDetailList = new ArrayList<SopiGroupDetail>();
 
-	
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "group_cd",insertable = false,updatable = false)
+	private SopiGroupMaster sopiGroupMaster;
 
 }

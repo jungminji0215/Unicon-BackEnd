@@ -1,6 +1,8 @@
 package sophist.group.model;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -30,7 +32,7 @@ public class SopiGroupMaster implements Serializable{
 	
 	// 모임 코드
 	@Id 
-	@Column(nullable = false, length = 10)
+	@Column(nullable = false, length = 10,name="group_cd")
 	private String groupCd;
 	
 	// 모임 이름
@@ -55,6 +57,9 @@ public class SopiGroupMaster implements Serializable{
 	@OneToOne
 	@JoinColumn(name="group_cd",insertable = false,updatable = false)
 	private SopiChatRoomMappingModel SopiChatRoomMappingModel;
+	
+	@OneToMany(mappedBy = "sopiGroupMaster")
+	private List<SopiGroupMemMapping> sopiGroupMemMappingList = new ArrayList<SopiGroupMemMapping>();
 	
 }
 

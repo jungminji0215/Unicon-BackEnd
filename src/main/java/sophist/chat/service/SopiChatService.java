@@ -8,5 +8,5 @@ import sophist.chat.model.SopiChatRoomModel;
 
 public interface SopiChatService {
 	
-	public List<SopiChatRoomModel> findAllWithChatRoomByMemId(String memId);
+	public List<SopiChatRoomModel> findAllWithChatRoomByMemId();
 }

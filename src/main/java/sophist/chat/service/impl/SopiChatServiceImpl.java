@@ -17,8 +17,8 @@ public class SopiChatServiceImpl implements SopiChatService{
 	private SopiChatRoomRepository sopiChatRoomRepository;
 
 	@Override
-	public List<SopiChatRoomModel> findAllWithChatRoomByMemId(String memId) {
-		return sopiChatRoomRepository.findAllWithChatRoomByMemId(memId);
+	public List<SopiChatRoomModel> findAllWithChatRoomByMemId() {
+		return sopiChatRoomRepository.findAllWithChatRoomByMemId();
 	}
 
 	

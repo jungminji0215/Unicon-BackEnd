@@ -12,14 +12,18 @@ import sophist.chat.model.SopiChatRoomModel;
 @EnableJpaRepositories
 public interface SopiChatRoomRepository extends JpaRepository<SopiChatRoomModel,String>{
 	
-	@Query("SELECT scrm.roomName,sgm.groupName,sgm.roomCd,scrmm.memId,scrmm.memNickname"
-			+ " FROM SopiChatRoomModel scrm "
-			+ " inner join SopiChatRoomMappingModel scrmm ON scrm.roomMappingCd=scrmm.roomMappingCd"
-			+ " inner join SopiGroupMaster sgm on sgm.groupCd=scrmm.groupCd"
-			+ " inner join SopiMemInfo smi on smi.memId=scrmm.memId"
-			+ " where scrmm.memId= :memId"
-			+ " and scrm.roomPermissionState= 'Y'"
+	@Query("SELECT sgm "
+			+ " FROM SopiGroupMaster sgm "
+			+ " inner join SopiFileMaster sfm on sgm.fileCd=sfm.fileCd"
+			+ " inner join SopiFileDetail sfd on sfm.fileCd=sfd.fileCd"
+			+ " inner join SopiChatRoomMapping scrm on sgm.groupCd=scrm.groupCd"
+			+ " inner join SopiChatRoom scr on scrm.roomMappingCd=scr.roomMappingCd"
+			+ " inner join SopiGroupMemMapping sgmm on sgm.groupCd = sgmm.groupCd"
+			+ " inner join SopiCategory sctg on sgmm.mappingCd =sctg.mappingCd"
+			+ " inner join SopiGroupDetail sgd on sgmm.mappingCd = sgd.mappingCd"
+			+ " where sctg.categoryState ='Y'"
+			+ " and sgm.groupState='Y' "
 			)
-	public List<SopiChatRoomModel> findAllWithChatRoomByMemId(String memId);
+	public List<SopiChatRoomModel> findAllWithChatRoomByMemId();
 	
 }
