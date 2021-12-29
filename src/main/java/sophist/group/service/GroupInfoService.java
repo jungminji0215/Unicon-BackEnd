@@ -8,6 +8,8 @@ import sophist.group.model.SopiGroupMaster;
 
 public interface GroupInfoService {
 
-	public Page<SopiGroupMaster> findAllWithFileUsingJoin(String fileCd,Pageable pageable);
+	public Page<SopiGroupMaster> findAllGroupListByStarPoint(Pageable pageable);
+	
+	public Page<SopiGroupMaster> findAllGroupListByCurrent(Pageable pageable);
 	
 }

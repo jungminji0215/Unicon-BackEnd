@@ -61,5 +61,6 @@ public class SopiGroupMaster implements Serializable{
 	@OneToMany(mappedBy = "sopiGroupMaster")
 	private List<SopiGroupMemMapping> sopiGroupMemMappingList = new ArrayList<SopiGroupMemMapping>();
 	
+	
 }
 

@@ -1,9 +1,9 @@
 package sophist.chat.service.impl;
 
-import java.util.List;
-
 import javax.annotation.Resource;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import sophist.chat.model.SopiChatRoomModel;
@@ -17,10 +17,9 @@ public class SopiChatServiceImpl implements SopiChatService{
 	private SopiChatRoomRepository sopiChatRoomRepository;
 
 	@Override
-	public List<SopiChatRoomModel> findAllWithChatRoomByMemId() {
-		return sopiChatRoomRepository.findAllWithChatRoomByMemId();
+	public Page<SopiChatRoomModel> findAllWithChatRoomByMemId(Pageable pageable) {
+		Page<SopiChatRoomModel> findAllWithChatRoomByMemId = sopiChatRoomRepository.findAllWithChatRoomByMemId(pageable);
+		return findAllWithChatRoomByMemId;
 	}
-
-	
-
 }
+

@@ -1,11 +1,12 @@
 package sophist.chat.controller;
 
-import java.util.List;
 
 import javax.annotation.Resource;
-import javax.servlet.http.HttpSession;
 
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort.Direction;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -18,11 +19,9 @@ public class SopiChatController {
 	@Resource
 	private SopiChatService sopiChatService;
 	
-	@GetMapping(value = "/sophist/chatRoomList")
-	public List<SopiChatRoomModel> findAllWithChatRoomByMemId(String memId,HttpSession session)  throws Throwable{
-		memId = (String) session.getAttribute("user");
-		System.out.println(memId);
-		return sopiChatService.findAllWithChatRoomByMemId();
+	@GetMapping(value = "/chatRoomList")
+	public Page<SopiChatRoomModel> findAllWithChatRoomByMemId(@PageableDefault(size = 10,sort = "sgd.groupStarPoint",direction = Direction.DESC)Pageable pageable  )  throws Throwable{
+		return sopiChatService.findAllWithChatRoomByMemId(pageable);
 		
 	}
 }

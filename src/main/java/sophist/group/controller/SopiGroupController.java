@@ -17,8 +17,13 @@ public class SopiGroupController {
 	@Resource
 	private GroupInfoService groupInfoService;
 	
-	@GetMapping(value="/sophist/groupList")
-	public Page<SopiGroupMaster> selectGroupList(String fileCd,Pageable pageable) throws Throwable{
-		return groupInfoService.findAllWithFileUsingJoin(fileCd, pageable);
+	@GetMapping(value="/bestGroupList")
+	public Page<SopiGroupMaster> findAllGroupListByStarPoint(Pageable pageable) throws Throwable{
+		return groupInfoService.findAllGroupListByStarPoint(pageable);
+	}
+	
+	@GetMapping(value="/CurrentGroupList")
+	public Page<SopiGroupMaster> findAllGroupListByCurrent(Pageable pageable) throws Throwable{
+		return groupInfoService.findAllGroupListByCurrent(pageable); 
 	}
 }
