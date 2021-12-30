@@ -29,5 +29,10 @@ public class GroupInfoServiceImpl implements GroupInfoService{
 		return groupRepository.findAllGroupListByCurrent(pageable);
 	}
 
+	@Override
+	public SopiGroupMaster findByGroupCd(String groupCd) {
+		return groupRepository.findByGroupCd(groupCd);
+	}
+
 	
 }

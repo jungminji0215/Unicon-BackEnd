@@ -13,4 +13,6 @@ public interface GroupInfoService {
 	
 	public Page<SopiGroupMaster> findAllGroupListByCurrent(Pageable pageable);
 	
+	public SopiGroupMaster findByGroupCd(String groupCd);
+	
 }

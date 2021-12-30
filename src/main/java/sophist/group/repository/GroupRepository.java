@@ -39,4 +39,17 @@ public interface GroupRepository extends JpaRepository<SopiGroupMaster,String>{
 			+ " and sgd.groupCreateDate > now() +'-1 days'"
 			)
 	public Page<SopiGroupMaster> findAllGroupListByCurrent(Pageable pageable);
+	
+	@Query("SELECT sgm.groupName as groupName,sgm.groupCd,sgm.groupDesc,sfd.filePath,sfd.originFileName,sctg.categoryName,sgd.groupStarPoint "
+			+ " FROM SopiGroupMaster sgm "
+			+ " inner join SopiFileMaster sfm on sgm.fileCd=sfm.fileCd"
+			+ " inner join SopiFileDetail sfd on sfm.fileCd=sfd.fileCd"
+			+ " inner join SopiGroupMemMapping sgmm on sgm.groupCd = sgmm.groupCd"
+			+ " inner join SopiCategory sctg on sgmm.mappingCd =sctg.mappingCd"
+			+ " inner join SopiGroupDetail sgd on sgmm.mappingCd = sgd.mappingCd"
+			+ " where sctg.categoryState ='Y'"
+			+ " and sgm.groupState='Y' "
+			+ " and sgm.groupCd = :groupCd "
+			)
+	public SopiGroupMaster findByGroupCd(String groupCd);
 }
