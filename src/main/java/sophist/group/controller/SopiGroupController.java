@@ -4,6 +4,8 @@ import javax.annotation.Resource;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort.Direction;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -18,12 +20,12 @@ public class SopiGroupController {
 	private GroupInfoService groupInfoService;
 	
 	@GetMapping(value="/bestGroupList")
-	public Page<SopiGroupMaster> findAllGroupListByStarPoint(Pageable pageable) throws Throwable{
+	public Page<SopiGroupMaster> findAllGroupListByStarPoint(@PageableDefault(size = 3,sort = "sgd.groupStarPoint",direction = Direction.DESC)Pageable pageable) throws Throwable{
 		return groupInfoService.findAllGroupListByStarPoint(pageable);
 	}
 	
-	@GetMapping(value="/CurrentGroupList")
-	public Page<SopiGroupMaster> findAllGroupListByCurrent(Pageable pageable) throws Throwable{
+	@GetMapping(value="/currentGroupList")
+	public Page<SopiGroupMaster> findAllGroupListByCurrent(@PageableDefault(size = 3,sort = "sgd.groupCreateDate",direction = Direction.DESC)Pageable pageable) throws Throwable{
 		return groupInfoService.findAllGroupListByCurrent(pageable); 
 	}
 }

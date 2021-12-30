@@ -14,7 +14,7 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 @EnableJpaRepositories
 public interface GroupRepository extends JpaRepository<SopiGroupMaster,String>{
 	
-	@Query("SELECT sgm.groupName,sgm.groupDesc,sfd.filePath,sfd.originFileName,sctg.categoryName,sgd.groupStarPoint "
+	@Query("SELECT sgm.groupName as groupName,sgm.groupCd,sgm.groupDesc,sfd.filePath,sfd.originFileName,sctg.categoryName,sgd.groupStarPoint "
 			+ " FROM SopiGroupMaster sgm "
 			+ " inner join SopiFileMaster sfm on sgm.fileCd=sfm.fileCd"
 			+ " inner join SopiFileDetail sfd on sfm.fileCd=sfd.fileCd"
@@ -27,7 +27,7 @@ public interface GroupRepository extends JpaRepository<SopiGroupMaster,String>{
 			)
 	public Page<SopiGroupMaster> findAllGroupListByStarPoint(Pageable pageable);
 	
-	@Query("SELECT sgm.groupName,sgm.groupDesc,sfd.filePath,sfd.originFileName,sctg.categoryName,sgd.groupStarPoint "
+	@Query("SELECT sgm.groupName as groupName,sgm.groupCd,sgm.groupDesc,sfd.filePath,sfd.originFileName,sctg.categoryName,sgd.groupStarPoint "
 			+ " FROM SopiGroupMaster sgm "
 			+ " inner join SopiFileMaster sfm on sgm.fileCd=sfm.fileCd"
 			+ " inner join SopiFileDetail sfd on sfm.fileCd=sfd.fileCd"
@@ -36,7 +36,7 @@ public interface GroupRepository extends JpaRepository<SopiGroupMaster,String>{
 			+ " inner join SopiGroupDetail sgd on sgmm.mappingCd = sgd.mappingCd"
 			+ " where sctg.categoryState ='Y'"
 			+ " and sgm.groupState='Y' "
-			+ " and sgd.groupStarPoint >= 4 "
+			+ " and sgd.groupCreateDate > now() +'-1 days'"
 			)
 	public Page<SopiGroupMaster> findAllGroupListByCurrent(Pageable pageable);
 }
