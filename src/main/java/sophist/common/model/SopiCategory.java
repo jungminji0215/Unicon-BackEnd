@@ -29,7 +29,7 @@ public class SopiCategory implements Serializable{
 	
 	// 맵핑 코드
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name="mapping_cd")
+	@JoinColumn(name="mapping_cd",insertable = false,updatable = false)
 	private SopiGroupMemMapping sopiGroupMemMapping;
 
 	// 카테고리 이름
@@ -39,5 +39,8 @@ public class SopiCategory implements Serializable{
 	// 카테고리 상태
 	@Column(nullable = false, length = 2)
 	private String categoryState;
+	
+	@Column(name="mapping_cd")
+	private String mappingCd;
 
 }

@@ -46,7 +46,7 @@ public class LoginController {
 		return new ResponseDto<String>(HttpStatus.OK.value(), data);
 	}
 
-	// 로그인
+	// 일반 로그인
 	@PostMapping("/login")
 	public ResponseDto<ResponseLogin> login(@RequestBody SopiMemInfo sopiMemInfo, HttpSession session) {
 		SopiMemInfo result = loginService.login(sopiMemInfo);

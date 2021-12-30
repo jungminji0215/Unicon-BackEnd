@@ -51,7 +51,7 @@ public class SopiMemInfo  implements Serializable {
 	@CreationTimestamp 
 	private Timestamp createDate;
 	
-	// 수정 일자
+	// 수정 일자 - 
 	@UpdateTimestamp 
 	@Column(columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP")
 	private Timestamp updateDate;

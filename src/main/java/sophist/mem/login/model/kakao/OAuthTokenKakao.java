@@ -2,6 +2,7 @@ package sophist.mem.login.model.kakao;
 
 import lombok.Data;
 
+
 @Data
 public class OAuthTokenKakao {
 	private String access_token;

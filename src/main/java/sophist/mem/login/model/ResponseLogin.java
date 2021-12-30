@@ -13,6 +13,7 @@ import lombok.NoArgsConstructor;
 @Builder
 public class ResponseLogin {
 	
+	
 	private String memId;
 	
 	// 사용자 닉네임

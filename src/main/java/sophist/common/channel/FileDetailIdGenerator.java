@@ -21,7 +21,6 @@ public class FileDetailIdGenerator implements IdentifierGenerator  {
 	    try {
 	        Statement statement=connection.createStatement();
 
-
 	        ResultSet rs=statement.executeQuery("select case when char_length(cast(file_detail_cd as varchar)) =1 then '00000000' ||  file_detail_cd "
 	        		+ " when char_length(cast(file_detail_cd as varchar)) =2 then '0000000' || file_detail_cd"
 	        		+ " when char_length(cast(file_detail_cd as varchar)) =3 then '000000' || file_detail_cd"

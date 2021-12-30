@@ -6,5 +6,4 @@ import lombok.Data;
 public class KakaoStatus {
 	private Integer result;
 	private KakaoProfile kakaoProfile;
-
 }

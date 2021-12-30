@@ -39,11 +39,9 @@ public class FileDetailImpl implements FileDetailService {
 		log.info("파일={}", file.getName());
 
 		try {
-			System.out.println("----------------------------------");
 			// sopi_file_master의 file_cd에 빈 객체를 저장 -> PK 자동 증가
 			SopiFileMaster sopiFileMaster = new SopiFileMaster();
 			fileMasterRepository.save(sopiFileMaster);
-			System.out.println("----------------------------------");
 			String maxFileCd = fileMasterRepository.findMasterFileCd();
 			log.info("maxFileCd={}", maxFileCd);
 
@@ -65,7 +63,6 @@ public class FileDetailImpl implements FileDetailService {
 			file.transferTo(new File(filePath));
 			
 			// sopi_mem_info 업데이트
-			
 
 		} catch (Exception e) {
 			// TODO: handle exception

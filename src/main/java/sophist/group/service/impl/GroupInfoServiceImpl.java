@@ -20,7 +20,14 @@ public class GroupInfoServiceImpl implements GroupInfoService{
 	private GroupRepository groupRepository;
 
 	@Override
-	public Page<SopiGroupMaster> findAllWithFileUsingJoin(String fileCd,Pageable pageable) {
-		return groupRepository.findAllWithFileUsingJoin(fileCd, pageable);
+	public Page<SopiGroupMaster> findAllGroupListByStarPoint(Pageable pageable) {
+		return groupRepository.findAllGroupListByStarPoint(pageable);
 	}
+
+	@Override
+	public Page<SopiGroupMaster> findAllGroupListByCurrent(Pageable pageable) {
+		return groupRepository.findAllGroupListByCurrent(pageable);
+	}
+
+	
 }

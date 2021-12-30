@@ -2,6 +2,7 @@ package sophist.mem.login.model.kakao;
 
 import lombok.Data;
 
+// 카카오
 @Data
 public class KakaoAccount {
 	public Boolean profile_nickname_needs_agreement;

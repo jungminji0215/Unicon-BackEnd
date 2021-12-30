@@ -9,6 +9,7 @@ import lombok.extern.slf4j.Slf4j;
 import sophist.mem.login.repository.LoginRepository;
 import sophist.mem.model.SopiMemInfo;
 
+
 @Slf4j
 @Service
 public class LoginService {
