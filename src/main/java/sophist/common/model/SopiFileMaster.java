@@ -36,7 +36,7 @@ public class SopiFileMaster implements Serializable  {
 	@Id 
 	@Column(name="file_cd")
 	@GeneratedValue(generator = "file_id")
-	@GenericGenerator(name="file_id",strategy = "sophist.common.channel.FileIdGenerator")
+	@GenericGenerator(name="file_id", strategy = "sophist.common.channel.FileIdGenerator")
 	private String fileCd;
 
 	@OneToMany(mappedBy = "sopiFileMaster")

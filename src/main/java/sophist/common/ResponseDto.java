@@ -1,4 +1,4 @@
-package sophist.mem.login;
+package sophist.common;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -11,6 +11,6 @@ import lombok.NoArgsConstructor;
 @Builder
 public class ResponseDto<T> {
 	int status;
-	T result;
+	T data;
 }
 
