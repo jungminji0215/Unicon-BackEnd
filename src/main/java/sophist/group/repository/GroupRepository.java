@@ -1,6 +1,7 @@
 package sophist.group.repository;
 
 
+import sophist.group.model.SopiGroupDetail;
 import sophist.group.model.SopiGroupMaster;
 
 import java.util.List;
@@ -14,7 +15,7 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 @EnableJpaRepositories
 public interface GroupRepository extends JpaRepository<SopiGroupMaster,String>{
 	
-	@Query("SELECT sgm.groupName as groupName,sgm.groupCd,sgm.groupDesc,sfd.filePath,sfd.originFileName,sctg.categoryName,sgd.groupStarPoint "
+	@Query("SELECT sgm.groupName as groupName,sgm.groupCd,sgm.groupDesc,sfd.filePath,sfd.originFileName,sctg.categoryName,sgd.groupStarPoint,sgd.groupDetailCd "
 			+ " FROM SopiGroupMaster sgm "
 			+ " inner join SopiFileMaster sfm on sgm.fileCd=sfm.fileCd"
 			+ " inner join SopiFileDetail sfd on sfm.fileCd=sfd.fileCd"
@@ -27,7 +28,7 @@ public interface GroupRepository extends JpaRepository<SopiGroupMaster,String>{
 			)
 	public Page<SopiGroupMaster> findAllGroupListByStarPoint(Pageable pageable);
 	
-	@Query("SELECT sgm.groupName as groupName,sgm.groupCd,sgm.groupDesc,sfd.filePath,sfd.originFileName,sctg.categoryName,sgd.groupStarPoint "
+	@Query("SELECT sgm.groupName as groupName,sgm.groupCd,sgm.groupDesc,sfd.filePath,sfd.originFileName,sctg.categoryName,sgd.groupStarPoint,sgd.groupDetailCd "
 			+ " FROM SopiGroupMaster sgm "
 			+ " inner join SopiFileMaster sfm on sgm.fileCd=sfm.fileCd"
 			+ " inner join SopiFileDetail sfd on sfm.fileCd=sfd.fileCd"
@@ -41,7 +42,7 @@ public interface GroupRepository extends JpaRepository<SopiGroupMaster,String>{
 	public Page<SopiGroupMaster> findAllGroupListByCurrent(Pageable pageable);
 	
 	@Query("SELECT sgm.groupName as groupName,sgm.groupCd,sgm.groupDesc,sfd.filePath,sfd.originFileName,sctg.categoryName,sgd.groupStarPoint "
-			+ " FROM SopiGroupMaster sgm "
+			+ " FROM  SopiGroupMaster sgm "
 			+ " inner join SopiFileMaster sfm on sgm.fileCd=sfm.fileCd"
 			+ " inner join SopiFileDetail sfd on sfm.fileCd=sfd.fileCd"
 			+ " inner join SopiGroupMemMapping sgmm on sgm.groupCd = sgmm.groupCd"
@@ -49,7 +50,7 @@ public interface GroupRepository extends JpaRepository<SopiGroupMaster,String>{
 			+ " inner join SopiGroupDetail sgd on sgmm.mappingCd = sgd.mappingCd"
 			+ " where sctg.categoryState ='Y'"
 			+ " and sgm.groupState='Y' "
-			+ " and sgm.groupCd = :groupCd "
+			+ " and sgd.groupDetailCd = :groupDetailCd "
 			)
-	public SopiGroupMaster findByGroupCd(String groupCd);
+	public Page<SopiGroupMaster> findByGroupCd(String groupDetailCd,Pageable pageable);
 }

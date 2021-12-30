@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
+import sophist.group.model.SopiGroupDetail;
 import sophist.group.model.SopiGroupMaster;
 
 public interface GroupInfoService {
@@ -13,6 +14,6 @@ public interface GroupInfoService {
 	
 	public Page<SopiGroupMaster> findAllGroupListByCurrent(Pageable pageable);
 	
-	public SopiGroupMaster findByGroupCd(String groupCd);
+	 public Page<SopiGroupMaster> findByGroupCd(String groupDetailCd,Pageable pageable);
 	
 }

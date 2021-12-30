@@ -1,14 +1,12 @@
 package sophist.group.service.impl;
 
-
-
 import javax.annotation.Resource;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import sophist.group.model.SopiGroupDetail;
 import sophist.group.model.SopiGroupMaster;
 import sophist.group.repository.GroupRepository;
 import sophist.group.service.GroupInfoService;
@@ -30,8 +28,8 @@ public class GroupInfoServiceImpl implements GroupInfoService{
 	}
 
 	@Override
-	public SopiGroupMaster findByGroupCd(String groupCd) {
-		return groupRepository.findByGroupCd(groupCd);
+	public Page<SopiGroupMaster> findByGroupCd(String groupDetailCd,Pageable pageable) {
+		return groupRepository.findByGroupCd(groupDetailCd, pageable);
 	}
 
 	

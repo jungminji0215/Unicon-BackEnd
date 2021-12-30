@@ -1,5 +1,7 @@
 package sophist.group.controller;
 
+import java.util.List;
+
 import javax.annotation.Resource;
 
 import org.springframework.data.domain.Page;
@@ -12,6 +14,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import sophist.group.model.SopiGroupDetail;
 import sophist.group.model.SopiGroupMaster;
 import sophist.group.service.GroupInfoService;
 
@@ -33,8 +36,8 @@ public class SopiGroupController {
 	}
 	
 	
-	@GetMapping(value="/group/{groupCd}")
-	public SopiGroupMaster findByGroupCd(@PathVariable("groupCd") String groupCd) {
-		return groupInfoService.findByGroupCd(groupCd);
+	@GetMapping(value="/group/{groupDetailCd}")
+	public Page<SopiGroupMaster> findByGroupCd(@PathVariable("groupDetailCd") String groupDetailCd,@PageableDefault(size = 3,sort = "sgd.groupCreateDate",direction = Direction.DESC)Pageable pageable) {
+		return groupInfoService.findByGroupCd(groupDetailCd, pageable);
 	}
 }
