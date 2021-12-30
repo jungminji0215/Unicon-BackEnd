@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.Column;
+import javax.persistence.Convert;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
@@ -18,6 +19,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import sophist.chat.model.SopiChatRoomMappingModel;
+import sophist.common.channel.JpaConverterJson;
 import sophist.common.model.SopiCodeMaster;
 import sophist.common.model.SopiFileMaster;
 
@@ -28,6 +30,7 @@ import sophist.common.model.SopiFileMaster;
 @Builder
 @Entity 
 @Table(name="sopi_group_master")
+
 public class SopiGroupMaster implements Serializable{
 	
 	// 모임 코드
@@ -56,11 +59,11 @@ public class SopiGroupMaster implements Serializable{
 	
 	@OneToOne
 	@JoinColumn(name="group_cd",insertable = false,updatable = false)
+	@Convert(attributeName = "data", converter = JpaConverterJson.class)
 	private SopiChatRoomMappingModel SopiChatRoomMappingModel;
 	
 	@OneToMany(mappedBy = "sopiGroupMaster")
 	private List<SopiGroupMemMapping> sopiGroupMemMappingList = new ArrayList<SopiGroupMemMapping>();
-	
 	
 }
 

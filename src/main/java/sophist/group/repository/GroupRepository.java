@@ -1,10 +1,9 @@
 package sophist.group.repository;
 
-
-import sophist.group.model.SopiGroupDetail;
 import sophist.group.model.SopiGroupMaster;
+import sophist.mem.model.SopiMemInfo;
 
-import java.util.List;
+import java.util.Map;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -15,7 +14,8 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 @EnableJpaRepositories
 public interface GroupRepository extends JpaRepository<SopiGroupMaster,String>{
 	
-	@Query("SELECT sgm.groupName as groupName,sgm.groupCd,sgm.groupDesc,sfd.filePath,sfd.originFileName,sctg.categoryName,sgd.groupStarPoint,sgd.groupDetailCd "
+	String findAllGroupListByStarPointQuery = 
+			" SELECT new map(sgm.groupName as groupName,sgm.groupCd as groupCd,sgm.groupDesc as groupDesc ,sfd.filePath as filePath,sfd.originFileName as originFileName,sctg.categoryName as categoryName,sgd.groupStarPoint as groupStarPoint,sgd.groupDetailCd as groupDetailCd) "
 			+ " FROM SopiGroupMaster sgm "
 			+ " inner join SopiFileMaster sfm on sgm.fileCd=sfm.fileCd"
 			+ " inner join SopiFileDetail sfd on sfm.fileCd=sfd.fileCd"
@@ -24,33 +24,45 @@ public interface GroupRepository extends JpaRepository<SopiGroupMaster,String>{
 			+ " inner join SopiGroupDetail sgd on sgmm.mappingCd = sgd.mappingCd"
 			+ " where sctg.categoryState ='Y'"
 			+ " and sgm.groupState='Y' "
-			+ " and sgd.groupStarPoint >= 4 "
-			)
-	public Page<SopiGroupMaster> findAllGroupListByStarPoint(Pageable pageable);
+			+ " and sgd.groupStarPoint >= 4 ";
+	@Query(value=findAllGroupListByStarPointQuery)
+	public Page<Map<String,Object>> findAllGroupListByStarPoint(Pageable pageable);
 	
-	@Query("SELECT sgm.groupName as groupName,sgm.groupCd,sgm.groupDesc,sfd.filePath,sfd.originFileName,sctg.categoryName,sgd.groupStarPoint,sgd.groupDetailCd "
-			+ " FROM SopiGroupMaster sgm "
-			+ " inner join SopiFileMaster sfm on sgm.fileCd=sfm.fileCd"
-			+ " inner join SopiFileDetail sfd on sfm.fileCd=sfd.fileCd"
-			+ " inner join SopiGroupMemMapping sgmm on sgm.groupCd = sgmm.groupCd"
-			+ " inner join SopiCategory sctg on sgmm.mappingCd =sctg.mappingCd"
-			+ " inner join SopiGroupDetail sgd on sgmm.mappingCd = sgd.mappingCd"
-			+ " where sctg.categoryState ='Y'"
-			+ " and sgm.groupState='Y' "
-			+ " and sgd.groupCreateDate > now() +'-1 days'"
-			)
-	public Page<SopiGroupMaster> findAllGroupListByCurrent(Pageable pageable);
 	
-	@Query("SELECT sgm.groupName as groupName,sgm.groupCd,sgm.groupDesc,sfd.filePath,sfd.originFileName,sctg.categoryName,sgd.groupStarPoint "
+	String findAllGroupListByCurrentQuery =
+	" SELECT new map(sgm.groupName as groupName,sgm.groupCd as groupCd,sgm.groupDesc as groupDesc ,sfd.filePath as filePath,sfd.originFileName as originFileName,sctg.categoryName as categoryName,sgd.groupStarPoint as groupStarPoint,sgd.groupDetailCd as groupDetailCd)"
+	+ " FROM SopiGroupMaster sgm "
+	+ " inner join SopiFileMaster sfm on sgm.fileCd=sfm.fileCd"
+	+ " inner join SopiFileDetail sfd on sfm.fileCd=sfd.fileCd"
+	+ " inner join SopiGroupMemMapping sgmm on sgm.groupCd = sgmm.groupCd"
+	+ " inner join SopiCategory sctg on sgmm.mappingCd =sctg.mappingCd"
+	+ " inner join SopiGroupDetail sgd on sgmm.mappingCd = sgd.mappingCd"
+	+ " where sctg.categoryState ='Y'"
+	+ " and sgm.groupState='Y' "
+	+ " and sgd.groupCreateDate > now() +'-1 weeks'";
+	
+	@Query(value=findAllGroupListByCurrentQuery)
+	public Page<Map<String,Object>> findAllGroupListByCurrent(Pageable pageable);
+	
+	String findByGroupCdQuery = " SELECT new map(sgm.groupName as groupName,sgm.groupDesc as groupDesc"
+			+ " ,sfd.filePath || sfd.originFileName as fileFullPath"
+			+ " ,sctg.categoryName as categoryName,sgd.groupStarPoint as groupStarPoint"
+			+ " ,sgd.groupHeadCount as groupHeadCount, sgd.groupStartDate || '~' || sgd.groupEndDate as groupDate"
+			+ " ,sgd.groupStarPoint as groupStarPoint, sgd.groupLeader as groupLeader )   "
 			+ " FROM  SopiGroupMaster sgm "
 			+ " inner join SopiFileMaster sfm on sgm.fileCd=sfm.fileCd"
 			+ " inner join SopiFileDetail sfd on sfm.fileCd=sfd.fileCd"
 			+ " inner join SopiGroupMemMapping sgmm on sgm.groupCd = sgmm.groupCd"
+			+ " inner join SopiMemInfo smi on smi.memId = sgmm.memId"
 			+ " inner join SopiCategory sctg on sgmm.mappingCd =sctg.mappingCd"
 			+ " inner join SopiGroupDetail sgd on sgmm.mappingCd = sgd.mappingCd"
 			+ " where sctg.categoryState ='Y'"
 			+ " and sgm.groupState='Y' "
-			+ " and sgd.groupDetailCd = :groupDetailCd "
-			)
-	public Page<SopiGroupMaster> findByGroupCd(String groupDetailCd,Pageable pageable);
+			+ " and sgm.groupState='Y' "
+			+ " and sgd.groupDetailCd = :groupDetailCd ";
+	@Query(value=findByGroupCdQuery)
+	public Page<Map<String,Object>> findByGroupCd(String groupDetailCd,Pageable pageable);
+	
+	
+	
 }
