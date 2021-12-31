@@ -67,7 +67,7 @@ public class SopiMemInfo implements Serializable {
 	private String memContents;
 	
 	// 사용자 SNS 확인
-	@Column(nullable = false, length = 20) 
+	@Column(length = 20) 
 	private String snsConfirm;
 	
 	@Column(name="file_cd")
