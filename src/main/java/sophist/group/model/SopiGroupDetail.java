@@ -30,7 +30,7 @@ public class SopiGroupDetail implements Serializable{
 	
 	// 맵핑코드 (FK)
 	@ManyToOne 
-	@JoinColumn(name="mapping_cd") 
+	@JoinColumn(name="mapping_cd",insertable = false,updatable = false) 
 	private SopiGroupMemMapping sopiGroupMemMapping;
 	
 	// 모임 인원  
@@ -61,5 +61,9 @@ public class SopiGroupDetail implements Serializable{
 	private String groupStartDay;
 	
 	// 모임 별점
+	@Column(name="group_star_poinrt")
 	private int groupStarPoint;
+	
+	@Column(name="mapping_cd")
+	private String mappingCd;
 }
