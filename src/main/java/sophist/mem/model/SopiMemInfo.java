@@ -82,4 +82,17 @@ public class SopiMemInfo implements Serializable {
 	
 	@OneToMany(mappedBy = "sopiMemInfo")
 	private List<SopiGroupMemMapping> sopiGroupMemMapping;
+	
+	@OneToMany(mappedBy = "sopiMemInfo")
+	private List<sophist.chat.model.SopiChatRoomMappingModel> SopiChatRoomMappingModel;
+
+	
+	public SopiMemInfo(String memId, String memNickname, String memGender, String memContents) {
+		this.memId = memId;
+		this.memNickname = memNickname;
+		this.memGender = memGender;
+		this.memContents = memContents;
+	}
+	
+	
 }
