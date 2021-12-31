@@ -40,7 +40,6 @@ public interface GroupRepository extends JpaRepository<SopiGroupMaster,String>{
 	+ " where sctg.categoryState ='Y'"
 	+ " and sgm.groupState='Y' "
 	+ " and sgd.groupCreateDate > now() +'-1 weeks'";
-	
 	@Query(value=findAllGroupListByCurrentQuery)
 	public Page<Map<String,Object>> findAllGroupListByCurrent(Pageable pageable);
 	
