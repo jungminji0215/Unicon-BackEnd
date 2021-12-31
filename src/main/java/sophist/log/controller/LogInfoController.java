@@ -40,5 +40,7 @@ public class LogInfoController {
 	public SopiSearchLog selectSearchLogDetail(String searchCd) throws Throwable{
 		return logInfoService.selectSearchLogDetail(searchCd);
 	}
+	
+	
 
 }
