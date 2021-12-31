@@ -47,7 +47,7 @@ public interface GroupRepository extends JpaRepository<SopiGroupMaster,String>{
 			+ " ,sctg.categoryName as categoryName,sgd.groupStarPoint as groupStarPoint"
 			+ " ,sgd.groupHeadCount as groupHeadCount, sgd.groupStartDate || '~' || sgd.groupEndDate as groupDate"
 			+ " ,sgd.groupStarPoint as groupStarPoint, sgd.groupLeader as groupLeader"
-			+ " ,to_char(sgd.groupStartDate, 'HH'), sgd.groupStartDay as groupStartDay"
+			+ " ,to_char(sgd.groupStartDate, 'HH') as groupStartTime, sgd.groupStartDay as groupStartDay"
 			+ " ,sgm.groupState as groupState  )   "
 			+ " FROM  SopiGroupMaster sgm "
 			+ " inner join SopiFileMaster sfm on sgm.fileCd=sfm.fileCd"
