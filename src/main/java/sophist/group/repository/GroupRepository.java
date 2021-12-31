@@ -28,7 +28,6 @@ public interface GroupRepository extends JpaRepository<SopiGroupMaster,String>{
 	@Query(value=findAllGroupListByStarPointQuery)
 	public Page<Map<String,Object>> findAllGroupListByStarPoint(Pageable pageable);
 	
-	
 	String findAllGroupListByCurrentQuery =
 	" SELECT new map(sgm.groupName as groupName,sgm.groupCd as groupCd,sgm.groupDesc as groupDesc ,sfd.filePath as filePath,sfd.originFileName as originFileName,sctg.categoryName as categoryName,sgd.groupStarPoint as groupStarPoint,sgd.groupDetailCd as groupDetailCd)"
 	+ " FROM SopiGroupMaster sgm "
@@ -48,7 +47,7 @@ public interface GroupRepository extends JpaRepository<SopiGroupMaster,String>{
 			+ " ,sctg.categoryName as categoryName,sgd.groupStarPoint as groupStarPoint"
 			+ " ,sgd.groupHeadCount as groupHeadCount, sgd.groupStartDate || '~' || sgd.groupEndDate as groupDate"
 			+ " ,sgd.groupStarPoint as groupStarPoint, sgd.groupLeader as groupLeader"
-			+ " ,to_date(sgd.groupStartDate, 'HH'), sgd.groupStartDay as groupStartDay"
+			+ " ,to_char(sgd.groupStartDate, 'HH'), sgd.groupStartDay as groupStartDay"
 			+ " ,sgm.groupState as groupState  )   "
 			+ " FROM  SopiGroupMaster sgm "
 			+ " inner join SopiFileMaster sfm on sgm.fileCd=sfm.fileCd"
