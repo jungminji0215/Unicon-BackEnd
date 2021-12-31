@@ -61,7 +61,7 @@ public class SopiGroupDetail implements Serializable{
 	private String groupStartDay;
 	
 	// 모임 별점
-	@Column(name="group_star_poinrt")
+	@Column(name="group_star_point")
 	private int groupStarPoint;
 	
 	@Column(name="mapping_cd")
