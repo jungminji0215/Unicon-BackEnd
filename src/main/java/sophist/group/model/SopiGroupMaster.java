@@ -19,7 +19,6 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import sophist.chat.model.SopiChatRoomMappingModel;
-import sophist.common.channel.JpaConverterJson;
 import sophist.common.model.SopiCodeMaster;
 import sophist.common.model.SopiFileMaster;
 
@@ -59,11 +58,11 @@ public class SopiGroupMaster implements Serializable{
 	
 	@OneToOne
 	@JoinColumn(name="group_cd",insertable = false,updatable = false)
-	@Convert(attributeName = "data", converter = JpaConverterJson.class)
 	private SopiChatRoomMappingModel SopiChatRoomMappingModel;
 	
 	@OneToMany(mappedBy = "sopiGroupMaster")
 	private List<SopiGroupMemMapping> sopiGroupMemMappingList = new ArrayList<SopiGroupMemMapping>();
+	
 	
 }
 
