@@ -2,7 +2,6 @@
 - [사용 기술](#사용-기술)
 - [프로젝트 설명](#프로젝트-설명)
 - [설계](#설계)
-- [트러블슈팅](#트러블슈팅)
 
 <br>
 
@@ -20,8 +19,13 @@
 
 ## 프로젝트 설명
 
+[팀 프로젝트 저장소](https://github.com/Unicon-Sophist)
 
-[프로젝트 저장소](https://github.com/Unicon-Sophist)
+<br>
+
+![sophist-login](https://user-images.githubusercontent.com/83000829/154785579-2dbac8c2-d270-433f-ba2c-1982f0c24d14.gif)
+
+![sophist-test](https://user-images.githubusercontent.com/83000829/154785586-3d897ae6-bf5c-404b-8203-4eb9772cf1d1.gif)
 
 - 온라인 독서모임 플랫폼
   - WebRTC를 사용하여 모임 사람끼리 화상으로 독서모임을 가질 수 있다.
@@ -48,11 +52,4 @@
 <p align="center">
 <img src="https://user-images.githubusercontent.com/83000829/152113616-9b87f423-e8da-4203-b3a4-965998fa42b7.png" />
 </p>
-
-<br>
-
-## 트러블슈팅
-
-프로젝트를 진행하면서 고민했던 부분
-
 
